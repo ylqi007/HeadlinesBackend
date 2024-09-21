@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("user")
-//@CrossOrigin    // 前端访问，需要跨域
+//@CrossOrigin    // 前端访问，需要跨域，此处还需要吗？
 public class UserController {
 
     @Autowired
@@ -45,7 +45,6 @@ public class UserController {
 
     @PostMapping("register")
     public Result register(@RequestBody User user) {
-
         return userService.register(user);
     }
 }

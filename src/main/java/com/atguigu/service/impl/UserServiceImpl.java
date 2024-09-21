@@ -31,28 +31,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private JwtHelper jwtHelper;
 
     /**
-     * 1. 根据账号，查询用户对象 loginUser
-     * 2. 如果账号为空，则查询失败，501
-     * 3. 对比密码，如果失败，返回503 Error
-     * 4. 根据用户Id生成一个token，--> 通过Result返回
+     * 实现登录业务
+     *  1. 根据账号，查询用户对象 loginUser
+     *  2. 如果账号为空，则查询失败，501
+     *  3. 对比密码，如果失败，返回503 Error
+     *  4. 根据用户Id生成一个token，--> 通过Result返回
      * @param user
-     * @return
+     * @return Result封装
      */
     @Override
     public Result login(User user) {
-        // 根据账号，查询数据库
+        // 检查用户是否存在：根据账号，查询数据库
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(User::getUsername, user.getUsername());
         User loginUser = userMapper.selectOne(lambdaQueryWrapper);
-
         if(loginUser == null) {
             return Result.build(null, ResultCodeEnum.USERNAME_ERROR);
         }
 
-        // 对比密码
+        // 检验用户密码是否正确
         if(!StringUtils.isEmpty(user.getUserPwd())
                 && MD5Util.encrypt(user.getUserPwd()).equals(loginUser.getUserPwd())) {
             // 登录成功
+
             // 根据用户ID生成token
             String token = jwtHelper.createToken(Long.valueOf(loginUser.getUid()));
 
@@ -84,12 +85,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
 
         Long userId = jwtHelper.getUserId(token);
-
         User user = userMapper.selectById(userId);
         user.setUserPwd("");
 
         Map data = Map.of("loginUserInfo", user);
-
         return Result.ok(data);
     }
 

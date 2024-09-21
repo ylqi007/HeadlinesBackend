@@ -35,6 +35,5 @@ class JwtHelperTest {
         boolean expiration = jwtHelper.isExpiration(token);
         System.out.println("### expiration = " + expiration);
 
-
     }
 }
