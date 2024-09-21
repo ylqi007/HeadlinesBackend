@@ -17,4 +17,9 @@ public interface UserService extends IService<User> {
     Result login(User user);
 
     Result getUserInfo(String token);
+
+    /**
+     * 检查账号是否可用
+     */
+    Result checkUserName(String username);
 }

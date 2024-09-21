@@ -92,6 +92,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
         return Result.ok(data);
     }
+
+    /**
+     * 检查账号是否可用
+     *  1. 根据账号查询进行count查询
+     *  2. count==0， 可用
+     *  3. count>0, 不可用
+     * @param username
+     * @return
+     */
+    @Override
+    public Result checkUserName(String username) {
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(User::getUsername, username);
+        Long count = userMapper.selectCount(lambdaQueryWrapper);
+
+        if(count == 0) {
+            return Result.ok(null);
+        }
+        return Result.build(null, ResultCodeEnum.USERNAME_USED);
+    }
 }
 
 

@@ -37,4 +37,9 @@ public class UserController {
         Result result = userService.getUserInfo(token);
         return result;
     }
+
+    @PostMapping("checkUserName")
+    public Result checkUserName(String username) {
+        return userService.checkUserName(username);
+    }
 }
