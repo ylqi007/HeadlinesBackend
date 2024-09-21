@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Create: 9/18/24 22:50
  */
 @SpringBootApplication
-@MapperScan("com.atguigu.mapper")
+@MapperScan("com.atguigu.mapper")   // 在启动类上扫描Mapper类
 @Slf4j
 public class Main {
     public static void main(String[] args) {

@@ -64,6 +64,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         // 密码错误
         return Result.build(null, ResultCodeEnum.PASSWORD_ERROR);
     }
+
+    /**
+     * 1. 校验token是否在有效期
+     * 2. 根据token解析出userId
+     * 3. 根据userId查询数据
+     * 4. 去掉密码，封装result，返回结果
+     * @param token
+     * @return
+     */
+    @Override
+    public Result getUserInfo(String token) {
+
+        boolean expiration = jwtHelper.isExpiration(token);
+
+        if(expiration) {
+            // 失败，token过期，登录失效
+            return Result.build(null, ResultCodeEnum.NOTLOGIN);
+        }
+
+        Long userId = jwtHelper.getUserId(token);
+
+        User user = userMapper.selectById(userId);
+        user.setUserPwd("");
+
+        Map data = Map.of("loginUserInfo", user);
+
+        return Result.ok(data);
+    }
 }
 
 

@@ -15,4 +15,6 @@ public interface UserService extends IService<User> {
      * 登录业务
      */
     Result login(User user);
+
+    Result getUserInfo(String token);
 }

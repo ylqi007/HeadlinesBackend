@@ -17,6 +17,7 @@ import lombok.Data;
 //@TableName(value ="news_headline") since there is already table-prefix in application.yaml
 @Data
 public class Headline implements Serializable {
+    @TableId
     private Integer hid;
 
     private String title;

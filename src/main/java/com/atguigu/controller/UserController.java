@@ -5,8 +5,10 @@ import com.atguigu.service.UserService;
 import com.atguigu.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,6 +29,12 @@ public class UserController {
     @PostMapping("login")
     public Result login(@RequestBody User user) {
         Result result = userService.login(user);
+        return result;
+    }
+
+    @GetMapping("getUserInfo")
+    public Result getUserInfo(@RequestHeader String token) {
+        Result result = userService.getUserInfo(token);
         return result;
     }
 }

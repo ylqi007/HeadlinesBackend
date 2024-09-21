@@ -15,6 +15,7 @@ import lombok.Data;
 //@TableName(value ="news_user")
 @Data
 public class User implements Serializable {
+    @TableId
     private Integer uid;
 
     private String username;
