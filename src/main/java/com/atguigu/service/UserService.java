@@ -22,4 +22,6 @@ public interface UserService extends IService<User> {
      * 检查账号是否可用
      */
     Result checkUserName(String username);
+
+    Result register(User user);
 }

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
  * Description:
@@ -14,6 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @MapperScan("com.atguigu.mapper")   // 在启动类上扫描Mapper类
 @Slf4j
+@CrossOrigin    // 前端访问，需要跨域
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");

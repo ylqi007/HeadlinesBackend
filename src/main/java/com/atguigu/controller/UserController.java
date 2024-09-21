@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Description:
+ * Description: UserController，与User相关的控制类。
  *
  * @Author: ylqi007
  * @Create: 9/20/24 19:46
  */
 @RestController
 @RequestMapping("user")
-@CrossOrigin    // 前端访问，需要跨域
+//@CrossOrigin    // 前端访问，需要跨域
 public class UserController {
 
     @Autowired
@@ -41,5 +41,11 @@ public class UserController {
     @PostMapping("checkUserName")
     public Result checkUserName(String username) {
         return userService.checkUserName(username);
+    }
+
+    @PostMapping("register")
+    public Result register(@RequestBody User user) {
+
+        return userService.register(user);
     }
 }

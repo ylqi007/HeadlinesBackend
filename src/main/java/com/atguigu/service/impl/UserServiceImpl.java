@@ -112,6 +112,31 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         return Result.build(null, ResultCodeEnum.USERNAME_USED);
     }
+
+    /**
+     * 用户注册
+     *  1. 检查账号是否已经被注册
+     *  2. 密码加密处理
+     *  3. 将账号保存到数据库
+     *  4. 返回结果
+     * @param user
+     * @return
+     */
+    @Override
+    public Result register(User user) {
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(User::getUsername, user.getUsername());
+        Long count = userMapper.selectCount(lambdaQueryWrapper);
+
+        if(count > 0) {
+            Result.build(null, ResultCodeEnum.USERNAME_USED);
+        }
+
+        user.setUserPwd(MD5Util.encrypt(user.getUserPwd()));
+        userMapper.insert(user);
+
+        return Result.ok(null);
+    }
 }
 
 
