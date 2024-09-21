@@ -4,7 +4,6 @@ import com.atguigu.pojo.User;
 import com.atguigu.service.UserService;
 import com.atguigu.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,5 +45,11 @@ public class UserController {
     @PostMapping("register")
     public Result register(@RequestBody User user) {
         return userService.register(user);
+    }
+
+    @GetMapping("checkLogin")
+    public Result checkLogin(@RequestHeader String token) {
+
+        return userService.checkLogin(token);
     }
 }

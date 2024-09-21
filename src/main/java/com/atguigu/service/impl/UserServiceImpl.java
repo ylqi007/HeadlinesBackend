@@ -136,6 +136,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
         return Result.ok(null);
     }
+
+    @Override
+    public Result checkLogin(String token) {
+        boolean expiration = jwtHelper.isExpiration(token);
+
+        if(expiration) {
+            return Result.build(null, ResultCodeEnum.NOTLOGIN);
+        }
+        return Result.ok(null);
+    }
 }
 
 
