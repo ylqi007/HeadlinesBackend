@@ -1,7 +1,12 @@
 package com.atguigu.mapper;
 
 import com.atguigu.pojo.Headline;
+import com.atguigu.pojo.dto.PortalInput;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Map;
 
 /**
 * @author ylqi007
@@ -10,6 +15,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.atguigu.pojo.Headline
 */
 public interface HeadlineMapper extends BaseMapper<Headline> {
+
+    IPage<Map> selectMyPage(IPage page, @Param("portalInput") PortalInput portalInput);
+
+    Map queryDetailMap(Integer hid);
 
 }
 

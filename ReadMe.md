@@ -8,3 +8,13 @@
 * logging level=INFO时，会打印INFO及以上level，即INFO，WARN，ERROR，FATAL，而DEBUG是不会被打印的
 * 使用Slf4j，门面，而不是实际的底层实现Log4j2
 * Youtube: [JAVA程序员如何正确打日志 日志框架选择,日志级别,日志实操,MDC源码解析](https://www.youtube.com/watch?v=8iq4JNKWXaY)
+
+
+## Reference
+* https://www.wolai.com/ie9813gmgSnVnEbFCdWfM2
+* https://docs.dingtalk.com/i/nodes/nYMoO1rWxaNL696dsqgjL1ynV47Z3je9
+
+
+## Bug
+1. P179分页功能没有正确实现
+2. 
