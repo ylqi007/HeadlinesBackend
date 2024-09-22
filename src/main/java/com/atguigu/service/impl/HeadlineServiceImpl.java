@@ -116,6 +116,26 @@ public class HeadlineServiceImpl extends ServiceImpl<HeadlineMapper, Headline>
 
         return Result.ok(null);
     }
+
+    /**
+     * 修改头条数据
+     *  1. hid查询数据的最新version
+     *  2. 修改数据时间为当前节点
+     *
+     * @param headline
+     * @return
+     */
+    @Override
+    public Result updateHeadline(Headline headline) {
+        Integer version = headlineMapper.selectById(headline.getHid()).getVersion();
+
+//        headline.setVersion(version);   // 乐观锁
+        headline.setUpdateTime(new Date());
+
+        headlineMapper.updateById(headline);
+
+        return Result.ok(null);
+    }
 }
 
 

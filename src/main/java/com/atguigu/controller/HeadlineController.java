@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Description:
  *
@@ -29,5 +32,20 @@ public class HeadlineController {
     public Result publish(@RequestBody Headline headline, @RequestHeader String token) {
         // 检查登录 --> 通过拦截器统一检查登录
         return headlineService.publish(headline, token);
+    }
+
+    @PostMapping("findHeadlineByHid")
+    public Result findHeadlineByHid(Integer hid) {
+        Headline headline = headlineService.getById(hid);
+
+        Map data = new HashMap();
+        data.put("headline", headline);
+
+        return Result.ok(data);
+    }
+
+    @PostMapping("update")
+    public Result update(@RequestBody Headline headline) {
+        return headlineService.updateHeadline(headline);
     }
 }
