@@ -1,6 +1,7 @@
 package com.atguigu.service.impl;
 
 import com.atguigu.pojo.dto.PortalInput;
+import com.atguigu.utils.JwtHelper;
 import com.atguigu.utils.Result;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +27,9 @@ import java.util.Map;
 @Slf4j
 public class HeadlineServiceImpl extends ServiceImpl<HeadlineMapper, Headline>
     implements HeadlineService{
+
+    @Autowired
+    private JwtHelper jwtHelper;
 
     @Autowired
     private HeadlineMapper headlineMapper;
@@ -53,8 +58,6 @@ public class HeadlineServiceImpl extends ServiceImpl<HeadlineMapper, Headline>
         log.info("#### page = {}", page);
         log.info("#### page.getRecords() = {}",  records);
         log.info("#### page.getRecords().size() = {}",  records.size());
-
-
 
         Map data = new HashMap();
         data.put("pageData", records);
@@ -89,6 +92,29 @@ public class HeadlineServiceImpl extends ServiceImpl<HeadlineMapper, Headline>
         headlineMapper.updateById(headline);
 
         return Result.ok(headlineMap);
+    }
+
+    /**
+     * 发布头条
+     *  1. 补全数据
+     *  2.
+     * @param headline
+     * @return
+     */
+    @Override
+    public Result publish(Headline headline, String token) {
+        // token 查询userId
+        int userId = jwtHelper.getUserId(token).intValue();
+
+        // 数据装配
+        headline.setPublisher(userId);
+        headline.setPageViews(0);
+        headline.setCreateTime(new Date());
+        headline.setUpdateTime(new Date());
+
+        headlineMapper.insert(headline);
+
+        return Result.ok(null);
     }
 }
 
